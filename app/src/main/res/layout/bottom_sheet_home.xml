@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_home"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@drawable/rounded_corner"
+    android:elevation="@dimen/margin_16"
+    android:padding="@dimen/margin_16"
+    app:behavior_hideable="true"
+    app:layout_behavior="@string/auto_close_behavior">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txv_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imv_cancel"
+        android:text="Filter"
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/imv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:padding="@dimen/margin_8"
+        android:src="@drawable/ic_cancel_black_24dp" />
+
+    <RadioGroup
+        android:id="@+id/rg_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txv_filter"
+        android:layout_marginTop="@dimen/margin_8"
+        android:orientation="horizontal">
+
+        <in.cyberwalker.alliance.view.RadioButtonWBg
+            android:id="@+id/rbAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8"
+            android:text="All" />
+
+        <in.cyberwalker.alliance.view.RadioButtonWBg
+            android:id="@+id/rbFamily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:padding="@dimen/margin_8"
+            android:text="Family" />
+
+        <in.cyberwalker.alliance.view.RadioButtonWBg
+            android:id="@+id/rbFriends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
+            android:padding="@dimen/margin_8"
+            android:text="Friends" />
+
+        <in.cyberwalker.alliance.view.RadioButtonWBg
+            android:id="@+id/rbWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8"
+            android:text="Work" />
+
+    </RadioGroup>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txv_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rg_filter"
+        android:layout_marginTop="@dimen/margin_8"
+        android:text="Sort"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/rg_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txv_sort"
+        android:layout_marginTop="@dimen/margin_8"
+        android:orientation="horizontal">
+
+        <in.cyberwalker.alliance.view.RadioButtonWBg
+            android:id="@+id/rbDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8"
+            android:text="Date" />
+
+        <in.cyberwalker.alliance.view.RadioButtonWBg
+            android:id="@+id/rbName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:padding="@dimen/margin_8"
+            android:text="Name" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rg_sort"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_16"
+        android:gravity="top|center_horizontal"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnApply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/capsule"
+            android:backgroundTint="@color/colorAccent"
+            android:text="Apply"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginStart="@dimen/margin_16"
+            android:background="@drawable/capsule"
+            android:backgroundTint="@color/colorAccent"
+            android:text="Reset"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+</RelativeLayout>

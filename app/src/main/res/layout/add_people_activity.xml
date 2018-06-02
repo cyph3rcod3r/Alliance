@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <FrameLayout
+        android:id="@+id/imvPerson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_36">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imvIcon"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_person" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/ic_add_circle_black_24dp" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imvPerson"
+        android:layout_marginTop="@dimen/margin_16"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="textCapWords"
+        android:maxLines="1"
+        android:lines="1"
+        android:maxLength="48"
+        android:hint="@string/hint_name"
+        android:padding="@dimen/margin_8" />
+
+    <RadioGroup
+        android:id="@+id/rgTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtName"
+        android:layout_marginTop="@dimen/margin_16"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <in.cyberwalker.alliance.view.RadioButtonWBg
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8"
+            android:text="Family" />
+
+        <in.cyberwalker.alliance.view.RadioButtonWBg
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
+            android:padding="@dimen/margin_8"
+            android:text="Friends" />
+
+        <in.cyberwalker.alliance.view.RadioButtonWBg
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8"
+            android:text="Work" />
+
+    </RadioGroup>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txvReachOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rgTag"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:text="@string/txt_reach_out_every" />
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/skbReach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txvReachOut"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_marginRight="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:progressDrawable="@drawable/skb_progress_drawable"
+        android:splitTrack="false"
+        android:thumb="@drawable/ic_seekbar_thumb" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txv_or"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/skbReach"
+        android:layout_marginTop="@dimen/margin_16"
+        android:gravity="center"
+        android:text="Or"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btnContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txv_or"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_marginRight="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:backgroundTint="@color/colorAccent"
+        android:text="Pick From Contact"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

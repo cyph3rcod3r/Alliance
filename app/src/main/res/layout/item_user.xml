@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:clickable="true"
+    android:foreground="?selectableItemBackground"
+    android:minHeight="?listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/margin_16"
+    android:paddingRight="@dimen/margin_16"
+    android:paddingTop="@dimen/margin_16">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imvIcon"
+        android:layout_width="@dimen/margin_36"
+        android:layout_height="@dimen/margin_36"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_person" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_toRightOf="@+id/imvIcon"
+        android:lines="1"
+        android:maxLines="1"
+        tools:text="Name" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txvRemain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txvName"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_toRightOf="@+id/imvIcon"
+        android:lines="1"
+        android:maxLines="1"
+        android:textSize="12sp"
+        tools:text="3 Days Left" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txvLastContacted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:lines="1"
+        android:maxLines="1"
+        android:textSize="12sp"
+        tools:text="Last Contact Date" />
+
+    <View
+        android:id="@+id/div"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_toLeftOf="@+id/txvLastContacted"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_6"
+        android:layout_marginLeft="@dimen/margin_48"
+        android:background="@color/colorAccent" />
+
+</RelativeLayout>
