@@ -113,6 +113,7 @@ public class EditPeopleActivity extends BaseActivity<EditPeoplePresenter> implem
         findViewById(R.id.btnSave).setOnClickListener(v -> presenter.save());
         findViewById(R.id.txvReachOut).setOnClickListener(v -> showTimeSelector());
         findViewById(R.id.edtBday).setOnClickListener(v -> showDatePicker());
+        findViewById(R.id.imvDelete).setOnClickListener(v -> presenter.delete());
 
     }
 

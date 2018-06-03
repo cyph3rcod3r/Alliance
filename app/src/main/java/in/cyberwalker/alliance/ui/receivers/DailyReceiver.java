@@ -8,7 +8,6 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +21,6 @@ public class DailyReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.e("Fuck", "Will schedule Job " + DailyRunnerSchedulerService.TAG);
         JobScheduler tm = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         tm.cancelAll();
 
@@ -52,6 +50,5 @@ public class DailyReceiver extends BroadcastReceiver {
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
 
-        Log.e("Fuck", "Daily Job " + calendar.getTime());
     }
 }

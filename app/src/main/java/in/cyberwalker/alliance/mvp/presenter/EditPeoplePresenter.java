@@ -1,7 +1,6 @@
 package in.cyberwalker.alliance.mvp.presenter;
 
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -86,7 +85,7 @@ public class EditPeoplePresenter extends Presenter<EditPeopleView> {
 
     public void processAvatarImg(Uri data, ContentResolver contentResolver) {
         try {
-            contentResolver.takePersistableUriPermission(data, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//            contentResolver.takePersistableUriPermission(data, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             InputStream is = contentResolver.openInputStream(data);
             if (is != null) {
                 Bitmap bmp = BitmapFactory.decodeStream(is);
@@ -96,5 +95,13 @@ public class EditPeoplePresenter extends Presenter<EditPeopleView> {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void delete() {
+        Completable.fromAction(() -> peopleRepo.delete(user)).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    view().onUserSaved();
+                });
     }
 }

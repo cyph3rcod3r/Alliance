@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
 import in.cyberwalker.alliance.R;
 import in.cyberwalker.alliance.data.AppDatabase;
@@ -25,13 +24,11 @@ public class ProvokeNotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent != null && intent.hasExtra("ID")) {
             int uId = intent.getIntExtra("ID", -1);
-            Log.e("Fuck", "I have reached Notification Service" + uId);
             if (uId > -1) {
                 new PeopleRepo(AppDatabase.get(context)).getUserById(uId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(user -> createNotification(context, user), e -> {
-                            Log.e("Fuck", "cant find user with id " + uId);
                         });
             }
         }
@@ -43,7 +40,6 @@ public class ProvokeNotificationReceiver extends BroadcastReceiver {
             return;
         }
 
-//        Log.e("Fuck", "creating notification now for the user " + user.name);
         Intent openDialerIntent = new Intent(Intent.ACTION_DIAL);
         if (!StringUtils.isNull(user.phoneNumber)) {
             openDialerIntent.setData(Uri.parse("tel:" + user.phoneNumber));

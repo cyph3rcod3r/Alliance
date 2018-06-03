@@ -36,4 +36,10 @@ public class PeopleRepo {
     public Single<User> getUserById(int id) {
         return userDao.getUser(id);
     }
+
+    public int delete(User user) {
+        return userDao.delete(user);
+    }
+
+
 }

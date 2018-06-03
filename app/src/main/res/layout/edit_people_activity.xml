@@ -36,19 +36,30 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edtName"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imvPerson"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_16"
                 android:background="@null"
+                android:layout_weight="1"
                 android:hint="@string/hint_name"
                 android:inputType="textCapWords"
                 android:lines="1"
                 android:maxLength="48"
                 android:maxLines="1"
                 android:padding="@dimen/margin_16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:padding="@dimen/margin_8"
+                android:id="@+id/imvDelete"
+                android:clickable="true"
+                android:foreground="?selectableItemBackground"
+                android:src="@drawable/round_delete_forever_black_48dp"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
         <RadioGroup

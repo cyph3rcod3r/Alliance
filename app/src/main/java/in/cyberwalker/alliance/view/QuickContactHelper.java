@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import in.cyberwalker.alliance.R;
 
 public final class QuickContactHelper {
 
@@ -42,6 +43,8 @@ public final class QuickContactHelper {
             final Bitmap thumbnail = fetchThumbnail(thumbnailId);
             if (thumbnail != null) {
                 badge.setImageBitmap(thumbnail);
+            } else {
+                badge.setImageResource(R.drawable.ic_person);
             }
         }
 

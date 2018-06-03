@@ -35,6 +35,5 @@ public class App extends Application {
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
 
-//        Log.e("Fuck", "Daily Job " + calendar.getTime());
     }
 }

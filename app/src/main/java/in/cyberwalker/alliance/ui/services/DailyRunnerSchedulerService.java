@@ -28,7 +28,6 @@ public class DailyRunnerSchedulerService extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters params) {
-//        Log.e("Fuck", "I have reached " + TAG);
         peopleRepo = new PeopleRepo(AppDatabase.get(this));
         peopleRepo.listUsers(null).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -41,10 +40,8 @@ public class DailyRunnerSchedulerService extends JobService {
 
     private void processUsers(List<User> list) {
         if (list == null || list.isEmpty()) {
-//            Log.e("Fuck", TAG + "list of user is empty");
             return;
         }
-//        Log.e("Fuck", TAG + "list of user" + list.size());
         for (User user :
                 list) {
             if (DateUtils.isSameDay(new Date(), user.reminderDate)) {
@@ -68,20 +65,6 @@ public class DailyRunnerSchedulerService extends JobService {
                 duration = hours;
             }
         }
-//        PersistableBundle persistableBundle = new PersistableBundle();
-//        persistableBundle.putInt("uId", id);
-//        JobInfo.Builder builder = new JobInfo.Builder(id,
-//                new ComponentName(getPackageName(),
-//                        DailyNotificationJobService.class.getName()));
-//        builder
-//                // Persist the schedule across the device reboots
-//                .setPersisted(true)
-//                .setExtras(persistableBundle)
-//                .setOverrideDeadline(duration);
-//
-//        JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-//        jobScheduler.schedule(builder.build());
-//        Log.e("Fuck", TAG + "job schedule for user Id " + id + "reminder date " + DateUtils.format(remiderDate, "dd-MM-yyyy HH:mm:ss"));
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this,

@@ -20,13 +20,11 @@ public class DailyNotificationJobService extends JobService {
     public boolean onStartJob(JobParameters params) {
         if (params != null && params.getExtras().containsKey("uId")) {
             int uId = params.getExtras().getInt("uId");
-//            Log.e("Fuck", "I have reached Notification Service");
 
             new PeopleRepo(AppDatabase.get(this)).getUserById(uId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(user -> createNotification(user), e -> {
-//                        Log.e("Fuck", "cant find user with id "+ uId);
                     });
         }
         return false;
@@ -41,8 +39,6 @@ public class DailyNotificationJobService extends JobService {
         if (user == null) {
             return;
         }
-
-//        Log.e("Fuck", "creating notification now for the user "+ user.name);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, user.jobTag)
                 .setSmallIcon(R.mipmap.ic_launcher)
