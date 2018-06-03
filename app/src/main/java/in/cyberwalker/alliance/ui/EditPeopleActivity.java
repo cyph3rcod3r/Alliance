@@ -149,6 +149,7 @@ public class EditPeopleActivity extends BaseActivity<EditPeoplePresenter> implem
             } else {
                 seekBar.setProgress(2);
             }
+            txvWhen.setText(reachOutMap.get(seekBar.getProgress() * INCREMENT).a);
 
             if (user.tag.equalsIgnoreCase(getString(R.string.txt_family))) {
                 ((RadioButtonWBg) rgTag.getChildAt(0)).setChecked(true);
