@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -16,43 +16,33 @@ import in.cyberwalker.alliance.data.AppDatabase;
 import in.cyberwalker.alliance.data.entity.User;
 import in.cyberwalker.alliance.data.repo.PeopleRepo;
 import in.cyberwalker.alliance.mvp.Presenter;
-import in.cyberwalker.alliance.mvp.view.AddPeopleView;
+import in.cyberwalker.alliance.mvp.view.EditPeopleView;
 import in.cyberwalker.alliance.util.DateUtils;
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class AddPeoplePresenter extends Presenter<AddPeopleView> {
-
+public class EditPeoplePresenter extends Presenter<EditPeopleView> {
     private PeopleRepo peopleRepo;
     public static final int INCREMENT = 2;
     private User user;
 
-    public AddPeoplePresenter(AppDatabase appDatabase) {
+    public EditPeoplePresenter(AppDatabase appDatabase) {
         peopleRepo = new PeopleRepo(appDatabase);
-        user = new User();
-        user.jobTag = User.tagGenerator();
     }
 
-    public void processContactData(Uri data, ContentResolver contentResolver) {
-        Disposable d = Single.just(contentResolver.query(data, new String[]{ContactsContract.Contacts._ID,
-                ContactsContract.Contacts.DISPLAY_NAME,
-                ContactsContract.CommonDataKinds.Phone.NUMBER,
-                ContactsContract.Contacts.PHOTO_ID}, null, null, null))
-                .observeOn(AndroidSchedulers.mainThread())
+    public void onCreate(int uId) {
+        Disposable d = peopleRepo.getUserById(uId)
                 .subscribeOn(Schedulers.io())
-                .subscribe(cursor -> {
-                    user.isContactImg = true;
-                    cursor.moveToFirst();
-                    view().postNumber(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                    view().postName(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
-                    view().postImage();
-
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(user -> {
+                    EditPeoplePresenter.this.user = user;
+                    view().onReceiveUser(user);
                 });
         addDisposablesToUnsubscribe(d);
+
     }
 
     public void save() {
@@ -67,24 +57,28 @@ public class AddPeoplePresenter extends Presenter<AddPeopleView> {
         user.reminderDate = DateUtils.addDays(user.lastContactedDate, user.repeat);
         user.phoneNumber = view().getPhoneNumber();
         user.imgPath = view().getImgPath();
+        user.notes = view().getNotes();
+        user.phoneNumber = view().getPhoneNumber();
+        user.dateOfBirth = view().getSelectedDate();
 
-        Completable.fromAction(() -> peopleRepo.saveUser(user))
+        Completable.fromAction(() -> peopleRepo.updateUser(user))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        Log.e("Edit", "subscribed");
                     }
 
                     @Override
                     public void onComplete() {
+                        Log.e("Edit", "complete");
                         view().scheduleNotifierJob(user);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Edit", "error" + e.getMessage());
                     }
 
                 });

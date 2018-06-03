@@ -13,7 +13,7 @@ public class User implements Comparable<User> {
     @Ignore
     public static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
     @Ignore
-    public static final String DATE_FORMAT_TIME = "HH:mm";
+    public static final String DATE_FORMAT_TIME = "hh:mm a";
     @Ignore
     public static final String DATE_FORMAT_GENERAL = "dd-MM-yyyy";
 

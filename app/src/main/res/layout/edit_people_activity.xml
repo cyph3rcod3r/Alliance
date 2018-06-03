@@ -34,46 +34,22 @@
 
             </FrameLayout>
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/txv_or"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/skbReach"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/margin_36"
-                android:layout_marginRight="@dimen/margin_36"
-                android:layout_marginTop="@dimen/margin_16"
-                android:gravity="center"
-                android:text="Or"
-                android:textColor="@color/colorAccent"
-                android:textSize="24sp" />
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btnContact"
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/imvPerson"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_16"
-                android:background="@drawable/capsule"
-                android:text="Pick From Contacts"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white" />
+                android:background="@null"
+                android:hint="@string/hint_name"
+                android:inputType="textCapWords"
+                android:lines="1"
+                android:maxLength="48"
+                android:maxLines="1"
+                android:padding="@dimen/margin_16" />
         </LinearLayout>
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/edtName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imvPerson"
-            android:layout_marginTop="@dimen/margin_16"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:hint="@string/hint_name"
-            android:inputType="textCapWords"
-            android:lines="1"
-            android:maxLength="48"
-            android:maxLines="1"
-            android:padding="@dimen/margin_16" />
 
         <RadioGroup
             android:id="@+id/rgTag"
@@ -90,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_8"
-                android:text="@string/txt_family" />
+                android:text="Family" />
 
             <in.cyberwalker.alliance.view.RadioButtonWBg
                 android:layout_width="wrap_content"
@@ -98,13 +74,13 @@
                 android:layout_marginLeft="@dimen/margin_16"
                 android:layout_marginRight="@dimen/margin_16"
                 android:padding="@dimen/margin_8"
-                android:text="@string/txt_friends" />
+                android:text="Friends" />
 
             <in.cyberwalker.alliance.view.RadioButtonWBg
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_8"
-                android:text="@string/txt_work" />
+                android:text="Work" />
 
         </RadioGroup>
 
@@ -134,9 +110,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rgTag"
+                android:layout_marginTop="@dimen/margin_8"
                 android:background="@color/colorPrimary"
                 android:clickable="true"
-                android:layout_marginTop="@dimen/margin_8"
                 android:foreground="?selectableItemBackground"
                 android:gravity="center"
                 android:textSize="16sp"
@@ -155,6 +131,49 @@
                 android:thumb="@drawable/ic_seekbar_thumb" />
 
         </LinearLayout>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edtPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imvPerson"
+            android:layout_marginTop="@dimen/margin_16"
+            android:background="@color/colorPrimary"
+            android:hint="Add Phone"
+            android:inputType="textCapWords"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="@dimen/margin_16" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edtBday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imvPerson"
+            android:layout_marginTop="@dimen/margin_16"
+            android:background="@color/colorPrimary"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="Add Birth Day"
+            android:inputType="textCapWords"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="@dimen/margin_16" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edtNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imvPerson"
+            android:layout_marginTop="@dimen/margin_16"
+            android:background="@color/colorPrimary"
+            android:gravity="top|left|start"
+            android:hint="Add Notes"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:maxLines="3"
+            android:minLines="3"
+            android:padding="@dimen/margin_16" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnSave"

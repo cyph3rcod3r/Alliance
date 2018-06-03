@@ -1,6 +1,7 @@
 package in.cyberwalker.alliance.ui;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.view.Gravity;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -30,17 +32,17 @@ import in.cyberwalker.alliance.BaseActivity;
 import in.cyberwalker.alliance.R;
 import in.cyberwalker.alliance.data.AppDatabase;
 import in.cyberwalker.alliance.data.entity.User;
-import in.cyberwalker.alliance.mvp.presenter.AddPeoplePresenter;
-import in.cyberwalker.alliance.mvp.view.AddPeopleView;
+import in.cyberwalker.alliance.mvp.presenter.EditPeoplePresenter;
+import in.cyberwalker.alliance.mvp.view.EditPeopleView;
 import in.cyberwalker.alliance.util.DateUtils;
 import in.cyberwalker.alliance.util.PermissionHelper;
 import in.cyberwalker.alliance.util.Tuple;
 import in.cyberwalker.alliance.view.QuickContactHelper;
 import in.cyberwalker.alliance.view.RadioButtonWBg;
 
-import static in.cyberwalker.alliance.mvp.presenter.AddPeoplePresenter.INCREMENT;
+import static in.cyberwalker.alliance.mvp.presenter.EditPeoplePresenter.INCREMENT;
 
-public class AddPeopleActivity extends BaseActivity<AddPeoplePresenter> implements AddPeopleView {
+public class EditPeopleActivity extends BaseActivity<EditPeoplePresenter> implements EditPeopleView {
 
     private static final int PICK_CONTACT = 20;
     private static final int P_REQ_READ_CONTACT = 21;
@@ -51,41 +53,36 @@ public class AddPeopleActivity extends BaseActivity<AddPeoplePresenter> implemen
     private AppCompatEditText edtName;
     private RadioGroup rgTag;
     private CircleImageView contactBadge;
-    private String phoneNumber;
     private HashMap<Integer, Tuple<String, Integer>> reachOutMap = new HashMap<>();
     private String currentTime;
     private Date selectedDateAndTime = new Date();
     private Uri imgUri;
     private AppCompatTextView txvWhen;
+    private EditText edPhone, edtBday, edtNotes;
+    private Date selectedDOB;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setContentView(R.layout.add_people_activity);
+        setContentView(R.layout.edit_people_activity);
         super.onCreate(savedInstanceState);
-        presenter = new AddPeoplePresenter(AppDatabase.get(this));
+
+        presenter = new EditPeoplePresenter(AppDatabase.get(this));
         presenter.bindView(this);
+        presenter.onCreate(getIntent().getIntExtra("uId", 0));
         initReachOut();
         initViews();
     }
 
     private void initViews() {
-        currentTime = new SimpleDateFormat(User.DATE_FORMAT_TIME).format(new Date());
         seekBar = findViewById(R.id.skbReach);
         txvReach = findViewById(R.id.txvReachOut);
         edtName = findViewById(R.id.edtName);
+        edPhone = findViewById(R.id.edtPhone);
+        edtBday = findViewById(R.id.edtBday);
+        edtNotes = findViewById(R.id.edtNotes);
         txvWhen = findViewById(R.id.txvWhen);
         contactBadge = findViewById(R.id.imvIcon);
         rgTag = findViewById(R.id.rgTag);
-
-        findViewById(R.id.btnContact).setOnClickListener(v -> {
-
-            if (!PermissionHelper.hasPermission(this, Manifest.permission.READ_CONTACTS)) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, P_REQ_READ_CONTACT);
-                return;
-            }
-
-            readFromContact();
-        });
 
         contactBadge.setOnClickListener(v -> {
             if (!PermissionHelper.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -94,8 +91,6 @@ public class AddPeopleActivity extends BaseActivity<AddPeoplePresenter> implemen
             }
             pickImage();
         });
-
-        txvReach.setText(Html.fromHtml(getString(R.string.txt_reach_out_every) + " <b>" + currentTime + "</b>"));
 
         seekBar.setMax(INCREMENT);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -117,9 +112,7 @@ public class AddPeopleActivity extends BaseActivity<AddPeoplePresenter> implemen
 
         findViewById(R.id.btnSave).setOnClickListener(v -> presenter.save());
         findViewById(R.id.txvReachOut).setOnClickListener(v -> showTimeSelector());
-
-        seekBar.setProgress(1);
-        ((RadioButtonWBg) rgTag.getChildAt(1)).setChecked(true);
+        findViewById(R.id.edtBday).setOnClickListener(v -> showDatePicker());
 
     }
 
@@ -138,27 +131,53 @@ public class AddPeopleActivity extends BaseActivity<AddPeoplePresenter> implemen
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
             imgUri = data.getData();
-            if (requestCode == PICK_CONTACT && resultCode == RESULT_OK) {
-                presenter.processContactData(imgUri, getContentResolver());
-            } else if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == RESULT_OK) {
+            if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == RESULT_OK) {
                 presenter.processAvatarImg(imgUri, getContentResolver());
             }
         }
     }
 
     @Override
-    public void postNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+    public void onReceiveUser(User user) {
+        if (user != null) {
+            edtName.setText(user.name);
+            if (user.repeat == 7) {
+                seekBar.setProgress(1);
+            } else if (user.repeat < 7) {
+                seekBar.setProgress(0);
+            } else {
+                seekBar.setProgress(2);
+            }
 
-    @Override
-    public void postName(String name) {
-        edtName.setText(name);
-    }
+            if (user.tag.equalsIgnoreCase(getString(R.string.txt_family))) {
+                ((RadioButtonWBg) rgTag.getChildAt(0)).setChecked(true);
+            } else if (user.tag.equalsIgnoreCase(getString(R.string.txt_family))) {
+                ((RadioButtonWBg) rgTag.getChildAt(1)).setChecked(true);
+            } else {
+                ((RadioButtonWBg) rgTag.getChildAt(2)).setChecked(true);
+            }
 
-    @Override
-    public void postImage() {
-        new QuickContactHelper(this, contactBadge, phoneNumber).addThumbnail();
+            currentTime = new SimpleDateFormat(User.DATE_FORMAT_TIME).format(user.reminderDate);
+            txvReach.setText(Html.fromHtml(getString(R.string.txt_reach_out_every) + " <b>" + currentTime + "</b>"));
+
+            if (user.phoneNumber != null && user.phoneNumber.length() > 0) {
+                edPhone.setText(user.phoneNumber);
+            }
+
+            if (user.dateOfBirth != null) {
+                edtBday.setText(DateUtils.format(user.dateOfBirth, DateUtils.MONTH_DAY_FORMAT));
+            }
+
+            if (user.notes != null && user.notes.length() > 0) {
+                edtNotes.setText(user.notes);
+            }
+            if (user.isContactImg) {
+                new QuickContactHelper(this, contactBadge, user.phoneNumber).addThumbnail();
+            } else if (user.imgPath != null && user.imgPath.length() > 0) {
+                imgUri = Uri.parse(user.imgPath);
+                presenter.processAvatarImg(imgUri, getContentResolver());
+            }
+        }
     }
 
     @Override
@@ -218,8 +237,40 @@ public class AddPeopleActivity extends BaseActivity<AddPeoplePresenter> implemen
     }
 
     @Override
+    public String getNotes() {
+        return edtNotes.getText().toString().trim();
+    }
+
+    @Override
+    public String getPhone() {
+        return edPhone.getText().toString().trim();
+    }
+
+    @Override
+    public Date getDob() {
+        return selectedDOB;
+    }
+
+    @Override
+    public void showDatePicker() {
+        Calendar newCalendar = Calendar.getInstance();
+        if (selectedDOB == null) {
+            newCalendar.setTimeInMillis(System.currentTimeMillis());
+        } else {
+            newCalendar.setTimeInMillis(selectedDOB.getTime());
+        }
+
+        new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            selectedDOB = newDate.getTime();
+            edtBday.setText(DateUtils.format(selectedDOB, DateUtils.MONTH_DAY_FORMAT));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    @Override
     public String getPhoneNumber() {
-        return phoneNumber;
+        return edPhone.getText().toString().trim();
     }
 
     @Override
@@ -251,8 +302,8 @@ public class AddPeopleActivity extends BaseActivity<AddPeoplePresenter> implemen
                 return;
             }
             selectedDateAndTime = selectDate;
-            currentTime = new SimpleDateFormat(User.DATE_FORMAT_TIME).format(selectedDateAndTime);
 
+            currentTime = new SimpleDateFormat(User.DATE_FORMAT_TIME).format(selectedDateAndTime);
             txvReach.setText(Html.fromHtml(getString(R.string.txt_reach_out_every) + " <b>" + currentTime + "</b>"));
         }, hour, minute, false);//Yes 24 hour time
         mTimePicker.show();

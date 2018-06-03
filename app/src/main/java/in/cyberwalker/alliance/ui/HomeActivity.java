@@ -1,7 +1,6 @@
 package in.cyberwalker.alliance.ui;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -27,7 +26,7 @@ import in.cyberwalker.alliance.view.RadioButtonWBg;
 
 public class HomeActivity extends BaseActivity<HomePresenter> implements HomeView {
 
-    private static final int REQ_ADD_USER = 101;
+    public static final int REQ_ADD_USER = 101;
     private AppCompatTextView txvQuotes;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -119,9 +118,9 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeVie
             } else {
                 int idx = new Random().nextInt(Defaults.quotes.length);
                 txvQuotes.setText(Defaults.quotes[idx]);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     txvQuotes.setTypeface(getResources().getFont(R.font.aclonica));
-                }
+                }*/
             }
             txvQuotes.setVisibility(View.VISIBLE);
         }

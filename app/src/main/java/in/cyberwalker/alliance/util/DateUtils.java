@@ -489,6 +489,13 @@ public class DateUtils {
         return date;
     }
 
+    public static Date getDate(int hour, int minute) {
+        Date date = new Date();
+        date.setHours(hour);
+        date.setMinutes(minute);
+        return date;
+    }
+
     public static Date getYesterday() {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);

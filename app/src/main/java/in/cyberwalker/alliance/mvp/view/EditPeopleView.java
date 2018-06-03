@@ -8,13 +8,8 @@ import java.util.Date;
 import in.cyberwalker.alliance.data.entity.User;
 import in.cyberwalker.alliance.mvp.View;
 
-public interface AddPeopleView extends View {
-
-    void postNumber(String phoneNumber);
-
-    void postName(String name);
-
-    void postImage();
+public interface EditPeopleView extends View {
+    void onReceiveUser(User user);
 
     void readFromContact();
 
@@ -43,4 +38,12 @@ public interface AddPeopleView extends View {
     void showTimeSelector();
 
     Date getSelectedDate();
+
+    String getNotes();
+
+    String getPhone();
+
+    Date getDob();
+
+    void showDatePicker();
 }
