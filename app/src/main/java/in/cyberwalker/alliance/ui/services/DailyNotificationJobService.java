@@ -8,10 +8,13 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import java.util.Date;
+
 import in.cyberwalker.alliance.R;
 import in.cyberwalker.alliance.data.AppDatabase;
 import in.cyberwalker.alliance.data.entity.User;
 import in.cyberwalker.alliance.data.repo.PeopleRepo;
+import in.cyberwalker.alliance.util.DateUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -39,11 +42,15 @@ public class DailyNotificationJobService extends JobService {
         if (user == null) {
             return;
         }
+        boolean birthday = false;
+        if (DateUtils.isSameDay(new Date(), user.dateOfBirth)) {
+            birthday = true;
+        }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, user.jobTag)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Hey There!")
-                .setContentText("Its time to call " + user.name)
+                .setContentText(birthday ? "Its " + user.name + "'s Birthday Today!" : "Its time to call " + user.name)
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         createNotificationChannel(user.jobTag);
