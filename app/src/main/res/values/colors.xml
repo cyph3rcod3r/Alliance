@@ -5,5 +5,9 @@
     <color name="colorAccent">#FF5252</color>
     <color name="div_card_bg">#1e000000</color>
     <color name="green">#95ee4f</color>
+    <color name="screen1">#E55154</color>
+    <color name="screen2">#87BA4F</color>
+    <color name="screen3">#D67872</color>
+    <color name="screen4">#1DA9EF</color>
     <color name="lighter_gray">#EEEEEE</color>
 </resources>

@@ -44,11 +44,11 @@ public class DailyRunnerSchedulerService extends JobService {
         }
         for (User user :
                 list) {
-            if (user.dateOfBirth != null && DateUtils.isSameDay(new Date(), user.dateOfBirth)) {
+            if (user.dateOfBirth != null && DateUtils.isSameDay(new Date(), DateUtils.addDays(user.dateOfBirth, -1))) {
                 setUserReminder(user.reminderDate, user.id);
             }
             if (DateUtils.isSameDay(new Date(), user.reminderDate)) {
-                if (user.dateOfBirth == null) setUserReminder(user.reminderDate, user.id);
+                setUserReminder(user.reminderDate, user.id);
                 // set new date
                 user.lastContactedDate = user.reminderDate;
                 user.reminderDate = DateUtils.addDays(user.reminderDate, user.repeat);

@@ -24,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import in.cyberwalker.alliance.BaseActivity;
@@ -52,7 +54,7 @@ public class AddPeopleActivity extends BaseActivity<AddPeoplePresenter> implemen
     private RadioGroup rgTag;
     private CircleImageView contactBadge;
     private String phoneNumber;
-    private HashMap<Integer, Tuple<String, Integer>> reachOutMap = new HashMap<>();
+    private Map<Integer, Tuple<String, Integer>> reachOutMap = new HashMap<>();
     private String currentTime;
     private Date selectedDateAndTime = new Date();
     private Uri imgUri;
@@ -69,7 +71,7 @@ public class AddPeopleActivity extends BaseActivity<AddPeoplePresenter> implemen
     }
 
     private void initViews() {
-        currentTime = new SimpleDateFormat(User.DATE_FORMAT_TIME).format(new Date());
+        currentTime = new SimpleDateFormat(User.DATE_FORMAT_TIME, Locale.getDefault()).format(new Date());
         seekBar = findViewById(R.id.skbReach);
         txvReach = findViewById(R.id.txvReachOut);
         edtName = findViewById(R.id.edtName);
@@ -240,18 +242,13 @@ public class AddPeopleActivity extends BaseActivity<AddPeoplePresenter> implemen
 
     @Override
     public void showTimeSelector() {
-        Calendar mcurrentTime = Calendar.getInstance();
-        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = mcurrentTime.get(Calendar.MINUTE);
+        Calendar mCurrentTime = Calendar.getInstance();
+        int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mCurrentTime.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
         mTimePicker = new TimePickerDialog(this, (timePicker, selectedHour, selectedMinute) -> {
-            Date selectDate = DateUtils.getDate(selectedHour, selectedMinute);
-            if (selectDate.before(new Date())) {
-                Toast.makeText(this, "Please select a time in future", Toast.LENGTH_LONG).show();
-                return;
-            }
-            selectedDateAndTime = selectDate;
-            currentTime = new SimpleDateFormat(User.DATE_FORMAT_TIME).format(selectedDateAndTime);
+            selectedDateAndTime = DateUtils.getDate(selectedHour, selectedMinute);
+            currentTime = new SimpleDateFormat(User.DATE_FORMAT_TIME, Locale.getDefault()).format(selectedDateAndTime);
 
             txvReach.setText(Html.fromHtml(getString(R.string.txt_reach_out_every) + " <b>" + currentTime + "</b>"));
         }, hour, minute, false);//Yes 24 hour time

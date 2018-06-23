@@ -27,15 +27,30 @@ public class StartActivity extends TutorialActivity {
         }
 
         addFragment(new Step.Builder().setTitle("Welcome To Alliance")
-                .setBackgroundColor(getResources().getColor(R.color.green))
-                .setContent("A Relationship Manager")
-                .setDrawable(R.mipmap.ic_launcher_round)
-                .setSummary("Summary")
+                .setBackgroundColor(getResources().getColor(R.color.screen1))
+                .setContent("A Simple Relationship Manager. We will remind you to get in touch with people you love")
+                .setDrawable(R.drawable.screener_1)
+                .setSummary("Friends, Family or Work. We got you cover")
                 .build());
-        addFragment(new Step.Builder().setTitle("Welcome To Alliance")
-                .setBackgroundColor(getResources().getColor(R.color.colorAccent))
-                .setContent("A Relationship Manager")
-                .setSummary("Summary")
+
+        addFragment(new Step.Builder().setTitle("Filter and Sort")
+                .setBackgroundColor(getResources().getColor(R.color.screen2))
+                .setContent("Find people according to tags and do sorting")
+                .setDrawable(R.drawable.screener_2)
+                .build());
+
+        addFragment(new Step.Builder().setTitle("Add People")
+                .setBackgroundColor(getResources().getColor(R.color.screen3))
+                .setContent("Add people who matters the most. Choose time and frequency, we will notify you then")
+                .setDrawable(R.drawable.screener_3)
+                .setSummary("We know its a busy life. But no more")
+                .build());
+
+        addFragment(new Step.Builder().setTitle("Add More")
+                .setBackgroundColor(getResources().getColor(R.color.screen4))
+                .setContent("Set Phone, Add Birthday or Notes while editing the people if you wish")
+                .setDrawable(R.drawable.screener_4)
+                .setSummary("Made with Love in India")
                 .build());
     }
 

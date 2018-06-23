@@ -11,10 +11,13 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import java.util.Date;
+
 import in.cyberwalker.alliance.R;
 import in.cyberwalker.alliance.data.AppDatabase;
 import in.cyberwalker.alliance.data.entity.User;
 import in.cyberwalker.alliance.data.repo.PeopleRepo;
+import in.cyberwalker.alliance.util.DateUtils;
 import in.cyberwalker.alliance.util.StringUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -40,6 +43,14 @@ public class ProvokeNotificationReceiver extends BroadcastReceiver {
             return;
         }
 
+        String contentText;
+
+        if (DateUtils.isSameDay(new Date(), DateUtils.addDays(user.dateOfBirth, -1))) {
+            contentText = "Its " + user.name + "'s Birthday Tomorrow!";
+        } else {
+            contentText = "Its time to call " + user.name;
+        }
+
         Intent openDialerIntent = new Intent(Intent.ACTION_DIAL);
         if (!StringUtils.isNull(user.phoneNumber)) {
             openDialerIntent.setData(Uri.parse("tel:" + user.phoneNumber));
@@ -48,7 +59,7 @@ public class ProvokeNotificationReceiver extends BroadcastReceiver {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, user.jobTag)
                 .setSmallIcon(R.drawable.ic_stat_icons_friends)
                 .setContentTitle("Hey There!")
-                .setContentText("Its time to call " + user.name)
+                .setContentText(contentText)
                 .setAutoCancel(true)
                 .setContentIntent(PendingIntent.getActivity(context, user.id,
                         openDialerIntent, 0))
