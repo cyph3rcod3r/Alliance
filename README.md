@@ -2,6 +2,11 @@
 
 An app made using Rxjava2 MVP and Google Room to notify user's to connect with their loved ones as per their prefrence
 
+[![screener_1529737942459.png](https://s15.postimg.cc/zc6vhpbcb/screener_1529737942459.png)](https://postimg.cc/image/a65xava1z/)
+[![screener_1529738038300.png](https://s15.postimg.cc/mkspb79a3/screener_1529738038300.png)](https://postimg.cc/image/fhktvl3uf/)
+[![screener_1529738100254.png](https://s15.postimg.cc/vftjlq5sb/screener_1529738100254.png)](https://postimg.cc/image/udjd36myv/)
+[![screener_1529738170802.png](https://s15.postimg.cc/8r4cm46e3/screener_1529738170802.png)](https://postimg.cc/image/slqe88llj/)
+
 Privacy:
 
       alliance Privacy Policy
